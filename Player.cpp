@@ -1,3 +1,7 @@
+/*
+-ä¿®æ”¹äº†â€œäººæŠŠç®±å­æ¨è¿›å¢™é‡Œâ€çš„bug
+-åœ¨æ§åˆ¶ç©å®¶æ“ä½œä¸äº¤äº’çš„å‡½æ•°ä¸­åŠ å…¥æ³¨é‡Š
+*/
 #include "Player.h"
 #include<QGraphicsScene>
 #include<QGraphicsPixmapItem>
@@ -19,19 +23,19 @@ Player::Player(QGraphicsItem* parent):QObject()//,QGraphicsPixmapItem(parent)
 void Player::keyPressEvent(QKeyEvent* event)
 {
 	{
-		if (event->key() == Qt::Key_Left)//µ±°´ÏÂ°´¼üÊ±
+		if (event->key() == Qt::Key_Left)//å½“æŒ‰ä¸‹æŒ‰é”®æ—¶
 		{
-			QList<QGraphicsItem* >colliding_item1 = collidingItems();//¼ì²âÓëÍæ¼ÒµÄÅö×²
+			QList<QGraphicsItem* >colliding_item1 = collidingItems();//æ£€æµ‹ä¸ç©å®¶çš„ç¢°æ’
 			for (int i = 0, n = colliding_item1.size(); i < n; i++)
 			{
-				if (typeid(*(colliding_item1[i])) == typeid(Box))//Èç¹ûÍæ¼ÒÓëÏä×Ó·¢ÉúÁËÅö×²
+				if (typeid(*(colliding_item1[i])) == typeid(Box))//å¦‚æœç©å®¶ä¸ç®±å­å‘ç”Ÿäº†ç¢°æ’
 				{
-					QList<QGraphicsItem *>colliding_item2 = colliding_item1[i]->collidingItems();//ÔÚ¼ì²âÔÚÕâÖÖÇé¿öÏÂÓëÏä×ÓµÄÅö×²
+					QList<QGraphicsItem *>colliding_item2 = colliding_item1[i]->collidingItems();//åœ¨æ£€æµ‹åœ¨è¿™ç§æƒ…å†µä¸‹ä¸ç®±å­çš„ç¢°æ’
 					for (int j = 0, m = colliding_item2.size(); j < m; j++)
 					{
-						if (typeid(*(colliding_item2[j])) == typeid(Block))//Èç¹ûÏä×ÓÓëÕÏ°­ÎïÓÖÓĞ½Ó´¥
-						{/*Èç¹ûÓĞÕÏ°­Îï
-							×èµ²Ïä×ÓµÄÍÆ¶¯ÔòÈËÊÇ²»ÄÜ¼ÌĞøÇ°½øµÄ,ÏÂÊö¾ÍÊÇ ÕÏ°­Îï-Ïä×Ó-ÈË£¬Ê©Á¦·½ÏòÏò×óµÄÇé¿ö*/
+						if (typeid(*(colliding_item2[j])) == typeid(Block))//å¦‚æœç®±å­ä¸éšœç¢ç‰©åˆæœ‰æ¥è§¦
+						{/*å¦‚æœæœ‰éšœç¢ç‰©
+							é˜»æŒ¡ç®±å­çš„æ¨åŠ¨åˆ™äººæ˜¯ä¸èƒ½ç»§ç»­å‰è¿›çš„,ä¸‹è¿°å°±æ˜¯ éšœç¢ç‰©-ç®±å­-äººï¼Œæ–½åŠ›æ–¹å‘å‘å·¦çš„æƒ…å†µ*/
 						if(colliding_item1[i]->pos().x() == colliding_item2[j]->pos().x()+100
 							&& colliding_item1[i]->pos().y() == colliding_item2[j]->pos().y()
 							&& colliding_item1[i]->pos().x() + 100 == (pos().x())
@@ -41,20 +45,20 @@ void Player::keyPressEvent(QKeyEvent* event)
 						else
 						{
 							if (colliding_item1[i]->pos().x() + 100 == (pos().x())
-								&& colliding_item1[i]->pos().y() == (pos().y()))//ÈË´ÓÏä×ÓÓÒ²àÍÆ
+								&& colliding_item1[i]->pos().y() == (pos().y()))//äººä»ç®±å­å³ä¾§æ¨
 								colliding_item1[i]->setPos(colliding_item1[i]->pos().x() - step, colliding_item1[i]->pos().y());
 						}
 					}
 				}
 				else if (typeid(*(colliding_item1[i])) == typeid(Block))
 				{
-					if (colliding_item1[i]->pos().x() + 100 == (pos().x())//ÈË´ÓÕÏ°­ÎïÓÒ²àÍÆ
+					if (colliding_item1[i]->pos().x() + 100 == (pos().x())//äººä»éšœç¢ç‰©å³ä¾§æ¨
 						&& colliding_item1[i]->pos().y() == (pos().y()))
 						setPos(x() + step, y());
 				}
 			}
 			setPos(x() - step, y());
-		}//ÆäËü¼¸¸ö°´¼üÍ¬Àí
+		}//å…¶å®ƒå‡ ä¸ªæŒ‰é”®åŒç†
 		else if (event->key() == Qt::Key_Right)
 		{
 			QList<QGraphicsItem* >colliding_item1 = collidingItems();
@@ -74,14 +78,14 @@ void Player::keyPressEvent(QKeyEvent* event)
 								setPos(x() - step, y());
 						}
 						else
-							if (colliding_item1[i]->pos().x() == (pos().x() + 100)//ÈË´ÓÏä×Ó×ó²àÍÆ
+							if (colliding_item1[i]->pos().x() == (pos().x() + 100)//äººä»ç®±å­å·¦ä¾§æ¨
 								&& colliding_item1[i]->pos().y() == (pos().y()))
 								colliding_item1[i]->setPos(colliding_item1[i]->pos().x() + step, colliding_item1[i]->pos().y());
 					}
 				}
 				else if (typeid(*(colliding_item1[i])) == typeid(Block))
 				{
-					if (colliding_item1[i]->pos().x() == (pos().x()+100)//ÈË´ÓÕÏ°­Îï×ó²àÍÆ
+					if (colliding_item1[i]->pos().x() == (pos().x()+100)//äººä»éšœç¢ç‰©å·¦ä¾§æ¨
 						&& colliding_item1[i]->pos().y() == (pos().y()))
 						setPos(x() - step, y());
 				}
@@ -108,7 +112,7 @@ void Player::keyPressEvent(QKeyEvent* event)
 						}
 						else
 						{
-							if (colliding_item1[i]->pos().x() == (pos().x())//ÈË´ÓÏä×ÓÏÂÃæÍÆ
+							if (colliding_item1[i]->pos().x() == (pos().x())//äººä»ç®±å­ä¸‹é¢æ¨
 								&& colliding_item1[i]->pos().y() + 100 == (pos().y()))
 								colliding_item1[i]->setPos(colliding_item1[i]->pos().x(), colliding_item1[i]->pos().y() - step);
 						}
@@ -116,7 +120,7 @@ void Player::keyPressEvent(QKeyEvent* event)
 				}
 				else if (typeid(*(colliding_item1[i])) == typeid(Block))
 				{
-					if (colliding_item1[i]->pos().y() + 100 == (pos().y())//ÈË´ÓÕÏ°­ÎïÏÂÃæÍÆ
+					if (colliding_item1[i]->pos().y() + 100 == (pos().y())//äººä»éšœç¢ç‰©ä¸‹é¢æ¨
 						&& colliding_item1[i]->pos().x() == (pos().x()))
 						setPos(x(), y()+step);
 				}
@@ -143,7 +147,7 @@ void Player::keyPressEvent(QKeyEvent* event)
 					}
 					else
 					{
-						if (colliding_item1[i]->pos().x() == (pos().x())//ÈË´ÓÏä×ÓÉÏÃæÍÆ
+						if (colliding_item1[i]->pos().x() == (pos().x())//äººä»ç®±å­ä¸Šé¢æ¨
 							&& colliding_item1[i]->pos().y() == (pos().y() + 100))
 							colliding_item1[i]->setPos(colliding_item1[i]->pos().x(), colliding_item1[i]->pos().y() + step);
 					}
@@ -151,7 +155,7 @@ void Player::keyPressEvent(QKeyEvent* event)
 			}
 			else if (typeid(*(colliding_item1[i])) == typeid(Block))
 			{
-					if (colliding_item1[i]->pos().y() == (pos().y()+100)//ÈË´ÓÕÏ°­ÎïÉÏÃæÍÆ
+					if (colliding_item1[i]->pos().y() == (pos().y()+100)//äººä»éšœç¢ç‰©ä¸Šé¢æ¨
 						&& colliding_item1[i]->pos().x() == (pos().x()))
 						setPos(x(), y()-step);
 			}
