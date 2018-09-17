@@ -106,9 +106,11 @@ int Userfile::getLevel() {
 	input->readLine();//读用户名
 	input->readLine();//读密码
 	while (!input->atEnd()) {
-		input->readLine();//后来每读两行，level+1最后得到的就是当前最高level
+		QString temp;
+		temp=input->readLine();//后来每读两行，level+1最后得到的就是当前最高level
+		level = temp.toInt();
 		input->readLine();
-		level++;
+		//level++;
 	}
 	return (level);
 }
